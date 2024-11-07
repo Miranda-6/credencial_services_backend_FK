@@ -40,6 +40,25 @@ app.MapGet("/api/credenciales", () => {
 
 });
 
+app.MapGet("/api/credenciales/{servicio}", (string servicio) => {
+    var credencial = credenciales.FirstOrDefault(c => c.servicio == servicio);
+    if (credencial != null)
+    {
+        return Results.Ok(credencial);
+    }
+    return Results.NotFound("Credencial no encontrada");
+});
+
+app.MapDelete("/api/credenciales/{servicio}", (string servicio) => {
+    var credencial = credenciales.FirstOrDefault(c => c.servicio == servicio);
+    if (credencial != null)
+    {
+        credenciales.Remove(credencial);
+        return Results.Ok();
+    }
+    return Results.NotFound("Credencial no encontrada");
+});
+
 
 app.Run();
 
